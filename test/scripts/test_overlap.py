@@ -1,7 +1,7 @@
 import json
 import networkx as nx
-def is_overlap(r1, r2):
-    return not (r1["end_min"] <= r2["start_min"] or r2["end_min"] <= r1["start_min"])
+def is_overlap(r1, r2,gap=0):
+    return not (r1["end_min"] + gap <= r2["start_min"] or r2["end_min"] + gap <= r1["start_min"])
 
 with open("data/sample_route.json",'r') as file:
   dat = json.load(file)
@@ -21,7 +21,7 @@ for i in range(len(dat)):
         r1 = dat[i]
         r2 = dat[j]
 
-        overlap = is_overlap(r1, r2)
+        overlap = is_overlap(r1, r2, 10)
 
         results.append((r1["id"], r2["id"], overlap))
 
