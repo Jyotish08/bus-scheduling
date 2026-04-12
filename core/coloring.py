@@ -1,10 +1,9 @@
+import networkx as nx
 
-coloring_dict = nx.greedy_color(G, strategy='largest_first')
-node_colors = [(node,coloring_dict[node]) for node in G.nodes()]
-print("\nBus Assignments:")
-for node in coloring_dict:
-    print(f"{node} → Bus {coloring_dict[node] + 1}")
+def assign_buses(G, strategy='largest_first'):
+    coloring_dict = nx.greedy_color(G, strategy=strategy)
 
-  
-  
+    # Calculate number of buses
+    num_buses = max(coloring_dict.values()) + 1
 
+    return coloring_dict, num_buses
