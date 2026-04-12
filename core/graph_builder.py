@@ -1,16 +1,20 @@
 import networkx as nx
+from core.overlap import is_overlap
 
+def build_graph(dat, gap=0):
+    G = nx.Graph()
 
-G = nx.Graph()
+    # Add nodes
+    for route in dat:
+        G.add_node(route["id"])
 
-# Add nodes
-for i in dat:
-    G.add_node(i["id"])
+    # Add edges directly (no results list)
+    for i in range(len(dat)):
+        for j in range(i + 1, len(dat)):
+            r1 = dat[i]
+            r2 = dat[j]
 
-# Add edges
-for i in results:
-    if i[2]:  # boolean check
-        G.add_edge(i[0], i[1])
-  
-  
+            if is_overlap(r1, r2, gap):
+                G.add_edge(r1["id"], r2["id"])
 
+    return G
